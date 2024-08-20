@@ -1,6 +1,7 @@
 package br.com.Conexao;
 
 import br.com.Interface.HomeView;
+import br.com.Interface.LoginView;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
@@ -17,8 +18,8 @@ public class LoginBD {
     public void conectar() {
         String server = "jdbc:mysql://localhost:3306/programateca?useSSL=false";
         String user = "root";
-        String senha = "Aluno";
-        String driver = "com.mysql.cj.jdbc.Driver";
+        String senha = "1384";
+        String driver = "com.mysql.cj.jdbc.Driver";   //postgresql://postgres:IciEssLiAGVhWihpremgjjdVuLodFgEF@autorack.proxy.rlwy.net:33438/railway
 
         try {
             Class.forName(driver);
@@ -69,13 +70,15 @@ public class LoginBD {
     }
 
     public void verificaUser(String email, String senha) throws SQLException {
-
+        
         String query = "select email,senha from login where email = '" + email + "' and senha = '" + senha + "'";
         this.rs = this.st.executeQuery(query);
         if (rs.next()) {
             HomeView hv = new HomeView();
             hv.setVisible(true);
+            
             System.out.println("Possui");
+            
         }else {
             JOptionPane.showMessageDialog(null, "Usuario ou senha invalidos!");
             

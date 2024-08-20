@@ -55,6 +55,11 @@ public class CadastroView extends javax.swing.JFrame {
         jtEmail.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jtEmail.setForeground(new java.awt.Color(0, 0, 0));
         jtEmail.setBorder(null);
+        jtEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtEmailActionPerformed(evt);
+            }
+        });
         getContentPane().add(jtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 460, 330, 50));
 
         jtNome.setBackground(new java.awt.Color(230, 225, 225));
@@ -109,8 +114,15 @@ public class CadastroView extends javax.swing.JFrame {
     }//GEN-LAST:event_jbAddFotoActionPerformed
 
     private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
-        cadastrar();
+        String nome = jtNome.getText();
+        String email = jtEmail.getText();
+        String senha = jpSenha.getText();
+        cadastrar(nome,email,senha);
     }//GEN-LAST:event_jbCadastrarActionPerformed
+
+    private void jtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtEmailActionPerformed
     
     public JPasswordField getJpSenha() {
         return jpSenha;
@@ -189,18 +201,24 @@ public class CadastroView extends javax.swing.JFrame {
         }
     }
 
-    private void cadastrar() {
-        String inserir = "insert into login (nome,email,foto,senha,data_nasc) values(?,?,?,?,?)";
-        try {
-            
+    private void cadastrar(String nome, String email, String senha) {
+        status();
+        LoginView lv = new LoginView();
+        if (nome.matches("")||senha.matches("")||email.matches("")){
+            JOptionPane.showMessageDialog(rootPane, "Preencha todos os campos!");
+        }else{
+            try {
+            String inserir = "insert into login (nome, email, senha) values('"+nome+"','"+email+"','"+senha+"')";           
             pst = con.prepareStatement(inserir);
-            pst.setString(1, jtNome.getText());
-            pst.setString(2, jtEmail.getText());
-            pst.setString(3, jNasc.getText());
-            pst.setString(4, jpSenha.getText());
-            pst.setBlob(5, fis, tamanho);
+            this.pst.executeUpdate(inserir);
+            System.out.println("Cadastrado");
+            con.close();
+            this.dispose();
+            lv.setVisible(true);
         } catch (Exception e) {
-            System.out.println("Erro no cadastro" + e);
+            JOptionPane.showMessageDialog(rootPane, "Este email já está cadastrado ou houve algum erro com o banco de dados!"+e);
+            System.out.println("Erro no cadastro " + e);
+        }
         }
     }
 
@@ -212,7 +230,7 @@ public class CadastroView extends javax.swing.JFrame {
             } else {
                 System.out.println("Conectado ao banco de dados");
             }
-            con.close();
+            //con.close();
         } catch (Exception e) {
             System.out.println(e);
         }

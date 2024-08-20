@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package br.com.Interface;
 
-/**
- *
- * @author aluno
- */
 public class HomeView extends javax.swing.JFrame {
 
     /**
@@ -34,7 +26,7 @@ public class HomeView extends javax.swing.JFrame {
         jbSair = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jtPesquisar.setBackground(new java.awt.Color(230, 225, 225));

@@ -36,7 +36,7 @@ public class LoginView extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jtEmail.setBackground(new java.awt.Color(230, 225, 225));
@@ -64,6 +64,11 @@ public class LoginView extends javax.swing.JFrame {
         jButton1.setBorder(null);
         jButton1.setContentAreaFilled(false);
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 730, 150, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/Imagens/1.png"))); // NOI18N
@@ -77,18 +82,24 @@ public class LoginView extends javax.swing.JFrame {
         
         if (jtEmail.getText().matches("") || jpSenha.getText().matches("")) {
             JOptionPane.showMessageDialog(rootPane, "Preencha todos os campos!");
-        }else{
-        
+        }else{        
             ControladorLogin login = new ControladorLogin();
             try {
             login.loginUsuario(this);
+            this.dispose();
             
         } catch (SQLException sql) {
-                System.out.println("Erro");           
+                System.out.println("Erro"+sql);           
 // Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, sql);
         }                   
     }
     }//GEN-LAST:event_jbEntrarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        CadastroView cv = new CadastroView();
+        cv.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     public void fechar(){
         System.exit(0);
@@ -146,7 +157,6 @@ public class LoginView extends javax.swing.JFrame {
         });
     }
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
